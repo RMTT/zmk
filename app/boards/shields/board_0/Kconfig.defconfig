@@ -1,0 +1,6 @@
+if SHIELD_BOARD_0
+
+config ZMK_KEYBOARD_NAME
+    default "board0"
+
+endif

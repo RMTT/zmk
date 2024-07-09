@@ -1,0 +1,66 @@
+/dts-v1/;
+#include <nordic/nrf52832_qfaa.dtsi>
+
+/ {
+	chosen {
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+		zephyr,code-partition = &slot0_partition;
+  };
+
+  aliases {
+    led0 = &led0;
+  };
+
+  leds {
+    compatible = "gpio-leds";
+    led0: led_0 {
+      gpios = <&gpio0 10 GPIO_ACTIVE_LOW>;
+    };
+  };
+};
+
+&uicr {
+	nfct-pins-as-gpios;
+};
+
+&gpiote {
+	status = "okay";
+};
+
+&gpio0 {
+	status = "okay";
+};
+
+&flash0 {
+	/*
+	 * For more information, see:
+	 * http://docs.zephyrproject.org/devices/dts/flash_partitions.html
+	 */
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		boot_partition: partition@0 {
+			label = "mcuboot";
+			reg = <0x000000000 0x0000C000>;
+		};
+		slot0_partition: partition@c000 {
+			label = "image-0";
+			reg = <0x0000C000 0x000036000>;
+		};
+		slot1_partition: partition@42000 {
+			label = "image-1";
+			reg = <0x00042000 0x000036000>;
+		};
+		scratch_partition: partition@78000 {
+			label = "image-scratch";
+			reg = <0x00078000 0x00004000>;
+		};
+		storage_partition: partition@7c000 {
+			label = "storage";
+			reg = <0x0007C000 0x00004000>;
+		};
+	};
+};

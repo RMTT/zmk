@@ -1,0 +1,6 @@
+if BOARD_BOARD_0
+
+config BOARD
+  default "board_0"
+
+endif
